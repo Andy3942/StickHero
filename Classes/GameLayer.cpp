@@ -63,8 +63,17 @@ void GameLayer::loadHero()
     _hero_sprite->setPosition(0, 300);
 }
 
-void GameLayer::stickCollapseEndCallFunc(Node* node)
+void GameLayer::stickCollapseEndCall(Node* node)
 {
+    int hero_x = _hero_sprite->getPositionX();
+    int stick_x = _stick_sprite->getPositionX();
+    int distance = stick_x - hero_x + _stick_sprite->getContentSize().height;
+    _hero_sprite->run(distance, CallFuncN::create(CC_CALLBACK_1(GameLayer::heroRunEndCall, this)));
+}
+
+void GameLayer::heroRunEndCall(Node* node)
+{
+
 }
 
 void GameLayer::addTouchEventListener()
@@ -85,9 +94,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *unused_event)
         if (_hero_sprite->getPositionX() >= stake_sprite->getPositionX() && _hero_sprite->getPositionX() <= stake_sprite->getPositionX() + stake_sprite->getContentSize().width)
         {
             auto stick_sprite = StickSprite::create();
-            stake_sprite->addChild(stick_sprite);
+            addChild(stick_sprite);
             stick_sprite->setAnchorPoint(Vec2(1, 0));
-            stick_sprite->setPosition(stake_sprite->getContentSize().width, stake_sprite->getContentSize().height);
+            stick_sprite->setPosition(stake_sprite->getPositionX() + stake_sprite->getContentSize().width, stake_sprite->getContentSize().height);
             stick_sprite->grow();
             _stick_sprite = stick_sprite;
             break;
@@ -103,7 +112,7 @@ void GameLayer::onTouchMoved(Touch *touch, Event *unused_event)
 void GameLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
     _stick_sprite->stopGrow();
-    _stick_sprite->collapse(CallFuncN::create(CC_CALLBACK_1(GameLayer::stickCollapseEndCallFunc, this)));
+    _stick_sprite->collapse(CallFuncN::create(CC_CALLBACK_1(GameLayer::stickCollapseEndCall, this)));
 }
 
 void GameLayer::onTouchCancelled(Touch *touch, Event *unused_event)

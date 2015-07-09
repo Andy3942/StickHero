@@ -18,12 +18,9 @@ class HeroSprite:public Sprite
 public:
     static HeroSprite* create();
 
-    void run();
-
+    void run(int distance, CallFuncN* run_end_call);
     void stop();
-
     void fall();
-
     void loadBody();
 private:
     Sprite* _body;

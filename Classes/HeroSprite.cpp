@@ -25,8 +25,12 @@ void HeroSprite::loadBody()
     _body->addChild(temp);
 }
 
-void HeroSprite::run()
+void HeroSprite::run(int distance, CallFuncN* run_end_call)
 {
+    float time = distance / 100;
+    auto move_by = MoveBy::create(time, Vec2(distance, 0));
+    auto run_action = Sequence::create(move_by, run_end_call, NULL);
+    runAction(run_action);
 }
 
 void HeroSprite::stop()

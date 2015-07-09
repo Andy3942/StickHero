@@ -30,7 +30,8 @@ public:
     void addStakes();
     void loadHero();
     void addTouchEventListener();
-    void stickCollapseEndCallFunc(Node* node);
+    void stickCollapseEndCall(Node* node);
+    void heroRunEndCall(Node* node);
 
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
