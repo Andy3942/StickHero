@@ -54,7 +54,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     auto game_layer = GameLayer::create(Color4B(0, 0, 255, 255));
     scene->addChild(game_layer);
-    game_layer->star();
+    game_layer->start();
     // run
     director->runWithScene(scene);
 
